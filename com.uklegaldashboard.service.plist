@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Service identifier (must be unique) -->
+    <key>Label</key>
+    <string>com.uklegaldashboard.service</string>
+
+    <!-- Program to run -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/rezazeraat/Desktop/Data/start_service.sh</string>
+    </array>
+
+    <!-- Working directory -->
+    <key>WorkingDirectory</key>
+    <string>/Users/rezazeraat/Desktop/Data</string>
+
+    <!-- Run on load (startup) -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Keep the service running (restart if it crashes) -->
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+
+    <!-- Restart if service exits -->
+    <key>KeepAliveTimeout</key>
+    <integer>30</integer>
+
+    <!-- Standard output log -->
+    <key>StandardOutPath</key>
+    <string>/Users/rezazeraat/Library/Logs/uk-legal-dashboard/launchd-out.log</string>
+
+    <!-- Standard error log -->
+    <key>StandardErrorPath</key>
+    <string>/Users/rezazeraat/Library/Logs/uk-legal-dashboard/launchd-err.log</string>
+
+    <!-- Environment variables -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin</string>
+        <!-- HUGGINGFACE_TOKEN should be set in your shell environment (~/.zshrc) -->
+        <!-- It will be inherited from the user's environment when the service runs -->
+    </dict>
+
+    <!-- Nice value (lower = higher priority) -->
+    <key>Nice</key>
+    <integer>0</integer>
+
+    <!-- Process type (background service) -->
+    <key>ProcessType</key>
+    <string>Background</string>
+
+    <!-- Throttle restart interval (seconds) -->
+    <key>ThrottleInterval</key>
+    <integer>60</integer>
+
+    <!-- Exit timeout (seconds) -->
+    <key>ExitTimeOut</key>
+    <integer>30</integer>
+</dict>
+</plist>

@@ -1,0 +1,67 @@
+# Database files
+*.db
+instance/*.db
+
+# Data files (allow main dataset)
+*.parquet
+!train.parquet
+
+# Backup files
+*.backup
+*.bak
+*.bak_*
+train.parquet.backup_*
+train.jsonl.backup
+train.jsonl.bak_*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.Python
+venv/
+env/
+
+# Environment
+.env
+*.env
+
+# Logs
+*.log
+logs/
+/tmp/
+
+# Editor
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# JSONL files (typically large)
+*.jsonl
+!train.jsonl
+
+# Node modules
+node_modules/
+package-lock.json
+
+# Shell configuration files (contain API keys)
+.bashrc
+.zshrc
+.zprofile
+.bash_profile
+
+# Jupyter notebooks (check for API keys before committing!)
+# Note: training-cot-sft.ipynb uses environment variables (safe)
+# Exclude any notebook backups or copies that might contain secrets
+*.ipynb.bak
+*.ipynb.backup
+*-with-keys.ipynb
+*_secrets.ipynb
+
+# Build outputs
+dist/
+build/
