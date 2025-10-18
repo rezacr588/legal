@@ -428,22 +428,39 @@ function AppContent() {
   // ========== NAVIGATION CONFIGURATION ==========
 
   /**
-   * Sidebar navigation menu items configuration
-   * Each item represents a main section of the application
+   * Sidebar navigation menu items configuration - Grouped by category
+   * Each group contains related menu items for better organization
    *
    * @type {Array<Object>}
-   * @property {string} text - Display name of the section
-   * @property {JSX.Element} icon - Material-UI icon component (with optional badge)
-   * @property {string} path - Route path for navigation
+   * @property {string} category - Section name
+   * @property {Array<Object>} items - Menu items in this category
    */
-  const menuItems = [
-    { text: 'Overview', icon: <DashboardIcon />, path: '/' },
-    { text: 'Generation Hub', icon: <Badge badgeContent={runningBatches} color="error"><GenerateIcon /></Badge>, path: '/generation' },
-    { text: 'Chat Testing', icon: <ChatIcon />, path: '/chat' },
-    { text: 'Provider Manager', icon: <SettingsIcon />, path: '/providers' },
-    { text: 'Dataset', icon: <DatasetIcon />, path: '/dataset' },
-    { text: 'Documentation', icon: <DocumentationIcon />, path: '/documentation' }
+  const menuGroups = [
+    {
+      category: 'Main',
+      items: [
+        { text: 'Overview', icon: <DashboardIcon />, path: '/', description: 'Dashboard & statistics' },
+        { text: 'Generation Hub', icon: <Badge badgeContent={runningBatches} color="error"><GenerateIcon /></Badge>, path: '/generation', description: 'Batch generation & monitoring' }
+      ]
+    },
+    {
+      category: 'Tools',
+      items: [
+        { text: 'Chat Testing', icon: <ChatIcon />, path: '/chat', description: 'Test AI conversations' },
+        { text: 'Dataset Explorer', icon: <DatasetIcon />, path: '/dataset', description: 'Browse & manage samples' }
+      ]
+    },
+    {
+      category: 'Configuration',
+      items: [
+        { text: 'Provider Manager', icon: <SettingsIcon />, path: '/providers', description: 'Manage AI providers & models' },
+        { text: 'Documentation', icon: <DocumentationIcon />, path: '/documentation', description: 'API reference & guides' }
+      ]
+    }
   ]
+
+  // Flatten menu items for current page title lookup
+  const menuItems = menuGroups.flatMap(group => group.items)
 
   // Get current page title based on route
   const getCurrentPageTitle = () => {
@@ -531,66 +548,178 @@ function AppContent() {
         )}
       </Box>
       <Divider />
-      <List sx={{ pt: 2, flexGrow: 1 }}>
-        {menuItems.map((item) => {
-          const isActive = location.pathname === item.path
-          return (
-            <ListItem key={item.text} disablePadding sx={{ px: sidebarCollapsed ? 1 : 2, mb: 1 }}>
-              <Tooltip title={sidebarCollapsed ? item.text : ''} placement="right" arrow>
-                <ListItemButton
-                  selected={isActive}
-                  onClick={() => handleNavigation(item.path)}
-                  sx={{
-                    borderRadius: 2,
-                    transition: 'all 0.3s ease',
-                    justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
-                    minHeight: 48,
-                    '&.Mui-selected': {
-                      background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(33, 150, 243, 0.1) 100%)',
-                      borderLeft: sidebarCollapsed ? 'none' : '4px solid #2196f3',
-                      '&:hover': {
-                        background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.3) 0%, rgba(33, 150, 243, 0.15) 100%)'
-                      }
-                    },
-                    '&:hover': {
-                      background: 'rgba(33, 150, 243, 0.08)',
-                      transform: sidebarCollapsed ? 'scale(1.05)' : 'translateX(4px)'
-                    }
-                  }}
-                >
-                  <ListItemIcon sx={{
-                    color: isActive ? '#2196f3' : 'inherit',
-                    minWidth: sidebarCollapsed ? 'auto' : 40,
-                    justifyContent: 'center'
-                  }}>
-                    {item.icon}
-                  </ListItemIcon>
-                  {!sidebarCollapsed && (
-                    <ListItemText
-                      primary={item.text}
-                      primaryTypographyProps={{
-                        fontWeight: isActive ? 600 : 400,
-                        color: isActive ? '#2196f3' : 'inherit'
-                      }}
-                    />
-                  )}
-                </ListItemButton>
-              </Tooltip>
-            </ListItem>
-          )
-        })}
-      </List>
-      <Divider />
-      <Box sx={{ p: 1 }}>
-        <Tooltip title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'} placement="right" arrow>
+      <Box sx={{ pt: 2, flexGrow: 1, overflowY: 'auto', overflowX: 'hidden' }}>
+        {menuGroups.map((group, groupIndex) => (
+          <Box key={group.category}>
+            {!sidebarCollapsed && (
+              <Typography
+                variant="caption"
+                sx={{
+                  px: 3,
+                  py: 1,
+                  display: 'block',
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  fontSize: '0.7rem',
+                  letterSpacing: '0.5px'
+                }}
+              >
+                {group.category}
+              </Typography>
+            )}
+            {sidebarCollapsed && groupIndex > 0 && (
+              <Divider sx={{ my: 1, mx: 1.5, borderColor: 'rgba(33, 150, 243, 0.2)' }} />
+            )}
+            <List sx={{ px: sidebarCollapsed ? 1 : 2, pb: 2 }}>
+              {group.items.map((item) => {
+                const isActive = location.pathname === item.path
+                return (
+                  <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
+                    <Tooltip
+                      title={sidebarCollapsed ? (
+                        <Box>
+                          <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
+                            {item.text}
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                            {item.description}
+                          </Typography>
+                        </Box>
+                      ) : ''}
+                      placement="right"
+                      arrow
+                    >
+                      <ListItemButton
+                        selected={isActive}
+                        onClick={() => handleNavigation(item.path)}
+                        sx={{
+                          borderRadius: 2,
+                          transition: 'all 0.3s ease',
+                          justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
+                          minHeight: 48,
+                          position: 'relative',
+                          overflow: 'hidden',
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            left: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: '3px',
+                            bgcolor: '#2196f3',
+                            opacity: isActive ? 1 : 0,
+                            transition: 'opacity 0.3s ease'
+                          },
+                          '&.Mui-selected': {
+                            background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(33, 150, 243, 0.1) 100%)',
+                            '&:hover': {
+                              background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.3) 0%, rgba(33, 150, 243, 0.15) 100%)'
+                            }
+                          },
+                          '&:hover': {
+                            background: 'rgba(33, 150, 243, 0.08)',
+                            transform: sidebarCollapsed ? 'scale(1.08)' : 'translateX(4px)'
+                          }
+                        }}
+                      >
+                        <ListItemIcon sx={{
+                          color: isActive ? '#2196f3' : 'inherit',
+                          minWidth: sidebarCollapsed ? 'auto' : 40,
+                          justifyContent: 'center',
+                          transition: 'color 0.3s ease'
+                        }}>
+                          {item.icon}
+                        </ListItemIcon>
+                        {!sidebarCollapsed && (
+                          <ListItemText
+                            primary={item.text}
+                            secondary={item.description}
+                            primaryTypographyProps={{
+                              fontWeight: isActive ? 600 : 500,
+                              color: isActive ? '#2196f3' : 'inherit',
+                              fontSize: '0.95rem'
+                            }}
+                            secondaryTypographyProps={{
+                              fontSize: '0.7rem',
+                              color: 'rgba(255, 255, 255, 0.5)',
+                              sx: { mt: 0.5 }
+                            }}
+                          />
+                        )}
+                      </ListItemButton>
+                    </Tooltip>
+                  </ListItem>
+                )
+              })}
+            </List>
+          </Box>
+        ))}
+      </Box>
+      <Divider sx={{ borderColor: 'rgba(33, 150, 243, 0.2)' }} />
+      <Box sx={{ p: 1.5 }}>
+        {/* Sidebar Stats */}
+        {!sidebarCollapsed && (
+          <Box sx={{
+            mb: 2,
+            p: 2,
+            borderRadius: 2,
+            background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.05) 100%)',
+            border: '1px solid rgba(33, 150, 243, 0.2)'
+          }}>
+            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              Quick Stats
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
+              <Box>
+                <Typography variant="h6" sx={{ color: '#2196f3', fontWeight: 600, fontSize: '1.1rem' }}>
+                  {stats.total?.toLocaleString() || 0}
+                </Typography>
+                <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.65rem' }}>
+                  Total Samples
+                </Typography>
+              </Box>
+              {runningBatches > 0 && (
+                <Box>
+                  <Typography variant="h6" sx={{ color: '#ff9800', fontWeight: 600, fontSize: '1.1rem' }}>
+                    {runningBatches}
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.65rem' }}>
+                    Active
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+          </Box>
+        )}
+
+        {/* Collapse/Expand Button */}
+        <Tooltip
+          title={
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                {sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+              </Typography>
+              <Typography variant="caption" sx={{ display: 'block', color: 'rgba(255,255,255,0.7)' }}>
+                {sidebarCollapsed ? 'Show full navigation' : 'Compact view'}
+              </Typography>
+            </Box>
+          }
+          placement="right"
+          arrow
+        >
           <IconButton
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             sx={{
               width: '100%',
               borderRadius: 2,
               color: '#2196f3',
+              border: '1px solid rgba(33, 150, 243, 0.3)',
+              transition: 'all 0.3s ease',
               '&:hover': {
-                bgcolor: 'rgba(33, 150, 243, 0.1)'
+                bgcolor: 'rgba(33, 150, 243, 0.15)',
+                borderColor: '#2196f3',
+                transform: 'scale(1.05)'
               }
             }}
           >
@@ -675,56 +804,131 @@ function AppContent() {
                 />
               )}
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2 } }}>
-              <Tooltip title="Refresh data (bypass cache)" arrow>
-                <IconButton
-                  onClick={() => {
-                    loadStats()
-                    toast.info('Refreshing data...', { autoClose: 2000, theme: 'dark' })
-                  }}
-                  sx={{
-                    color: '#2196f3',
-                    '&:hover': { bgcolor: 'rgba(33, 150, 243, 0.1)' }
-                  }}
-                  size="small"
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1.5 } }}>
+              {/* Data Actions Group */}
+              <Box sx={{
+                display: 'flex',
+                gap: 0.5,
+                px: 1,
+                borderRight: { xs: 'none', sm: '1px solid rgba(33, 150, 243, 0.2)' }
+              }}>
+                <Tooltip title="Refresh data (bypass cache)" arrow>
+                  <IconButton
+                    onClick={() => {
+                      loadStats()
+                      toast.info('Refreshing data...', { autoClose: 2000, theme: 'dark' })
+                    }}
+                    sx={{
+                      color: '#2196f3',
+                      '&:hover': {
+                        bgcolor: 'rgba(33, 150, 243, 0.15)',
+                        transform: 'rotate(90deg)',
+                        transition: 'all 0.3s ease'
+                      }
+                    }}
+                    size="small"
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Export to HuggingFace" arrow>
+                  <IconButton
+                    onClick={() => setHfModalOpen(true)}
+                    sx={{
+                      color: '#ff9800',
+                      '&:hover': {
+                        bgcolor: 'rgba(255, 152, 0, 0.15)',
+                        transform: 'translateY(-2px)',
+                        transition: 'all 0.3s ease'
+                      }
+                    }}
+                    size="small"
+                  >
+                    <CloudUploadIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+
+              {/* System Settings Group */}
+              <Box sx={{
+                display: 'flex',
+                gap: 0.5,
+                px: { xs: 0.5, sm: 1 },
+                borderRight: { xs: 'none', sm: '1px solid rgba(33, 150, 243, 0.2)' }
+              }}>
+                <Tooltip
+                  title={
+                    <Box sx={{ textAlign: 'center' }}>
+                      <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                        Sound Notifications
+                      </Typography>
+                      <Typography variant="caption" sx={{ display: 'block', color: 'rgba(255,255,255,0.7)' }}>
+                        {soundEnabled ? 'Currently ON' : 'Currently OFF'}
+                      </Typography>
+                    </Box>
+                  }
+                  arrow
                 >
-                  <RefreshIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Push to Hugging Face" arrow>
-                <IconButton
-                  onClick={() => setHfModalOpen(true)}
-                  sx={{
-                    color: '#ff9800',
-                    '&:hover': { bgcolor: 'rgba(255, 152, 0, 0.1)' }
-                  }}
-                  size="small"
-                >
-                  <CloudUploadIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title={soundEnabled ? 'Disable sound notifications' : 'Enable sound notifications'} arrow>
-                <IconButton
-                  onClick={() => setSoundEnabled(!soundEnabled)}
-                  sx={{
-                    color: soundEnabled ? '#69f0ae' : '#666',
-                    '&:hover': { bgcolor: 'rgba(105, 240, 174, 0.1)' }
-                  }}
-                  size="small"
-                >
-                  {soundEnabled ? <VolumeUp /> : <VolumeOff />}
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="View notifications" arrow>
+                  <IconButton
+                    onClick={() => {
+                      setSoundEnabled(!soundEnabled)
+                      toast.success(
+                        soundEnabled ? 'Sound notifications disabled' : 'Sound notifications enabled',
+                        { autoClose: 2000, theme: 'dark' }
+                      )
+                    }}
+                    sx={{
+                      color: soundEnabled ? '#69f0ae' : 'rgba(255, 255, 255, 0.4)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        bgcolor: soundEnabled ? 'rgba(105, 240, 174, 0.15)' : 'rgba(255, 255, 255, 0.1)',
+                        transform: 'scale(1.1)'
+                      }
+                    }}
+                    size="small"
+                  >
+                    {soundEnabled ? <VolumeUp /> : <VolumeOff />}
+                  </IconButton>
+                </Tooltip>
+              </Box>
+
+              {/* Notifications */}
+              <Tooltip
+                title={
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                      Notifications
+                    </Typography>
+                    {notificationHistory.length > 0 && (
+                      <Typography variant="caption" sx={{ display: 'block', color: 'rgba(255,255,255,0.7)' }}>
+                        {notificationHistory.length} unread
+                      </Typography>
+                    )}
+                  </Box>
+                }
+                arrow
+              >
                 <IconButton
                   color="inherit"
                   size="small"
                   onClick={handleNotificationClick}
                   sx={{
-                    '&:hover': { bgcolor: 'rgba(33, 150, 243, 0.1)' }
+                    '&:hover': {
+                      bgcolor: 'rgba(33, 150, 243, 0.15)',
+                      transform: 'scale(1.1)',
+                      transition: 'all 0.3s ease'
+                    }
                   }}
                 >
-                  <Badge badgeContent={notificationHistory.length > 0 ? notificationHistory.length : null} color="error">
+                  <Badge
+                    badgeContent={notificationHistory.length > 0 ? notificationHistory.length : null}
+                    color="error"
+                    sx={{
+                      '& .MuiBadge-badge': {
+                        animation: notificationHistory.length > 0 ? 'pulse 2s ease-in-out infinite' : 'none'
+                      }
+                    }}
+                  >
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>
