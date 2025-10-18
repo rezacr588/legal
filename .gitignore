@@ -65,3 +65,10 @@ package-lock.json
 # Build outputs
 dist/
 build/
+
+# Docker
+portainer_data/
+.dockerignore
+
+# Archive (legacy code)
+archive/

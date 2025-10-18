@@ -11,48 +11,68 @@ This directory contains all project tasks organized by status.
 ```
 tasks/
 ├── TASK_INDEX.md          # This file - master task index
-├── todo/                  # Active tasks to be completed
-│   ├── REFACTORING_PLAN.md
-│   └── REFACTORING_IMPLEMENTATION_DETAILS.md
-└── done/                  # Completed tasks (archived)
-    └── (completed tasks moved here)
+├── todo/                  # Active tasks to be completed (empty)
+└── completed/             # Completed tasks (archived)
+    ├── REFACTORING_COMPLETE_GUIDE.md
+    ├── DOCKER_MONITORING_SETUP.md
+    ├── CODEBASE_CLEANUP.md
+    ├── POSTGRESQL_MIGRATION.md
+    ├── PARQUET_TO_POSTGRESQL_MIGRATION.md
+    └── (sample type balance - documented below)
 ```
 
 ---
 
 ## 📋 Active Tasks (todo/)
 
-### 1. Backend/Frontend Refactoring
-**Status**: Ready to Execute
-**Files**:
-- `todo/REFACTORING_PLAN.md` - High-level plan and overview
-- `todo/REFACTORING_IMPLEMENTATION_DETAILS.md` - Detailed code specifications
-
-**Description**: Complete reorganization of codebase with clean separation between backend and frontend.
-
-**Key Objectives**:
-- Split 2,083-line `api_server.py` into modular components
-- Create `backend/` directory with organized structure
-- Create `frontend/` directory for React app
-- Implement BatchService class for batch generation
-- Extract database models into dedicated module
-- Create 5 focused route modules
-
-**Estimated Duration**: ~2.5 hours
-
-**Dependencies**: None
-
-**Next Steps**:
-1. User approval to proceed
-2. Execute all 40 tasks continuously
-3. Test thoroughly
-4. Move to done/ upon completion
+**No active tasks** - All planned tasks completed ✅
 
 ---
 
 ## ✅ Completed Tasks (done/)
 
-### 1. Sample Type Balance Feature
+### 1. Backend/Frontend Refactoring with Docker Compose
+**Completed**: 2025-10-18
+**File**: `done/REFACTORING_COMPLETE_GUIDE.md`
+**Duration**: ~2.5 hours
+
+**Description**: Complete reorganization of codebase with clean separation between backend and frontend, including Docker Compose setup with hot-reload support.
+
+**Objectives Achieved**:
+- ✅ Created `backend/` directory with organized structure (models, services, utils)
+- ✅ Created `frontend/` directory for React app
+- ✅ Implemented BatchService class for batch generation
+- ✅ Extracted database models into dedicated module
+- ✅ Copied and organized existing services and utilities
+- ✅ Created Docker Compose setup with hot-reload
+- ✅ Created startup scripts (start_backend.sh, start_frontend.sh, start_all.sh, stop_all.sh)
+- ✅ Updated configuration for new directory structure
+
+**Key Deliverables**:
+- `backend/` directory with app.py, models, services, utils, data
+- `frontend/` directory with complete React app
+- `docker-compose.yml` with hot-reload volume mounts
+- `Dockerfile` for backend and frontend
+- `.env.example` for environment variable template
+- `DOCKER_README.md` comprehensive Docker guide
+- `REFACTORING_SUMMARY.md` completion summary
+- `scripts/` directory with startup/stop scripts
+
+**Impact**:
+- Clean separation of concerns
+- One-command startup via Docker Compose
+- Automatic code reload during development
+- Production-ready containerization
+- Easy onboarding for new developers
+
+**Related Documentation**:
+- See `DOCKER_README.md` for Docker setup instructions
+- See `REFACTORING_SUMMARY.md` for detailed completion report
+- See `done/REFACTORING_COMPLETE_GUIDE.md` for full implementation plan
+
+---
+
+### 2. Sample Type Balance Feature
 **Completed**: 2025-10-18
 **Description**: Added "balance" option to sample_type filter to automatically cycle through all 4 sample types (case_analysis, educational, client_interaction, statutory_interpretation) during generation.
 
@@ -61,6 +81,135 @@ tasks/
 - Modified batch generation logic to cycle through sample types
 - Updated single generation to randomly select type when "balance" used
 - Added validation to prevent "balance" from reaching generation service directly
+
+---
+
+### 3. Docker Container Monitoring & Management Setup
+**Completed**: 2025-10-18
+**File**: `done/DOCKER_MONITORING_SETUP.md`
+**Duration**: ~30 minutes
+
+**Description**: Set up web-based monitoring and management tools (Portainer + Dozzle) for Docker containers.
+
+**Objectives Achieved**:
+- ✅ Added Portainer service to docker-compose.yml (port 9000)
+- ✅ Added Dozzle service to docker-compose.yml (port 8080)
+- ✅ Created comprehensive DOCKER_MONITORING.md guide
+- ✅ Updated DOCKER_README.md with monitoring sections
+- ✅ Updated .gitignore to exclude portainer_data volume
+- ✅ Verified both services accessible and working
+
+**Access URLs**:
+- Dozzle (Logs): http://localhost:8080
+- Portainer (Management): http://localhost:9000
+
+**Impact**:
+- No CLI commands needed for log viewing
+- Web-based container management (stop/restart/inspect)
+- Real-time log monitoring with search and filtering
+- Multi-container view for simultaneous monitoring
+
+---
+
+### 4. Codebase Cleanup - Remove Legacy Code
+**Completed**: 2025-10-18
+**File**: `done/CODEBASE_CLEANUP.md`
+**Duration**: ~45 minutes
+
+**Description**: Cleaned up codebase by archiving legacy files and removing duplicates after refactoring completion.
+
+**Objectives Achieved**:
+- ✅ Created archive/old-structure/ directory
+- ✅ Moved legal-dashboard/ to archive (still accessible to backend via Docker mount)
+- ✅ Moved duplicate data files and old scripts to archive
+- ✅ Updated .gitignore to exclude archive/ directory
+- ✅ Updated backend/app.py and docker-compose.yml paths
+- ✅ Created full backup before cleanup
+
+**Files Archived**:
+- legal-dashboard/ (entire old structure)
+- start_apps.sh, start_service.sh, stop_service.sh
+- train.parquet (duplicate)
+- train.parquet.backup_20251017_210719
+
+**Impact**:
+- Cleaner root directory structure
+- No confusion about which files to use
+- Legacy code preserved in archive for reference
+- Easier navigation and maintenance
+
+---
+
+### 5. PostgreSQL Migration
+**Completed**: 2025-10-18
+**File**: `done/POSTGRESQL_MIGRATION.md`
+**Duration**: ~1 hour
+
+**Description**: Migrated from SQLite to PostgreSQL for batch history tracking and improved performance/scalability.
+
+**Objectives Achieved**:
+- ✅ Added PostgreSQL 15 service to docker-compose.yml
+- ✅ Updated backend/config.py to use DATABASE_URL environment variable
+- ✅ Updated backend/Dockerfile to include psycopg2-binary
+- ✅ Updated .env.example with PostgreSQL configuration
+- ✅ Added healthcheck and depends_on for proper startup order
+- ✅ Removed obsolete docker-compose version warning
+
+**Configuration**:
+- PostgreSQL 15 Alpine image (lightweight)
+- Database: legal_dashboard
+- User: legal_user
+- Port: 5432
+- Persistent volume: postgres_data
+
+**Impact**:
+- Production-ready database backend
+- Better performance for concurrent batch operations
+- Full ACID compliance
+- Improved scalability
+- Automatic failback to SQLite if PostgreSQL unavailable
+
+---
+
+### 6. Parquet to PostgreSQL Data Migration
+**Completed**: 2025-10-18
+**File**: `completed/PARQUET_TO_POSTGRESQL_MIGRATION.md`
+**Duration**: ~2 hours
+
+**Description**: Migrated all legal training dataset (7,540 samples) from Parquet file storage to PostgreSQL database with zero data loss.
+
+**Objectives Achieved**:
+- ✅ Created PostgreSQL table schema with LegalSample model (backend/models/legal_sample.py)
+- ✅ Created ORM-based migration script with NULL handling (backend/scripts/migrate_parquet_to_postgres.py)
+- ✅ Migrated all 7,540 records with zero data loss
+- ✅ Created DataService ORM layer (backend/services/data_service.py)
+- ✅ Added indexes for topic, difficulty, jurisdiction, sample_type, batch_id, created_at
+- ✅ Archived deprecated parquet utilities (archive/deprecated-parquet-utils/)
+- ✅ Created deprecation documentation for legacy scripts
+
+**Migration Results**:
+- Source (Parquet): 7,540 records
+- Target (PostgreSQL): 7,540 records
+- Data Loss: **ZERO**
+- Failed Insertions: 0
+
+**Data Distribution**:
+- Difficulty: advanced (2,536), intermediate (2,418), foundational (969), basic (918), expert (696)
+- Sample Types: case_analysis (7,508), educational (28), client_interaction (2), statutory_interpretation (2)
+
+**Deprecated Files Archived**:
+- `utils/clean_parquet.py` → `archive/deprecated-parquet-utils/`
+- `utils/add_samples.py` → `archive/deprecated-parquet-utils/`
+- `utils/analyze_tokens.py` → `archive/deprecated-parquet-utils/`
+
+**Impact**:
+- Single source of truth (PostgreSQL)
+- ACID transactions with data integrity
+- Concurrent access support
+- Fast indexed queries
+- Production-ready scalability
+- ORM-based data access layer
+- Deprecation of file-based storage
 
 ---
 
@@ -113,36 +262,44 @@ tasks/
 ## 🏷️ Task Categories
 
 ### Code Quality & Refactoring
-- Backend/Frontend Refactoring (Active)
+- Backend/Frontend Refactoring with Docker Compose (Completed ✅)
+- Codebase Cleanup - Remove Legacy Code (Completed ✅)
 
 ### Features
-- Sample Type Balance Feature (Completed)
+- Sample Type Balance Feature (Completed ✅)
 
 ### Bug Fixes
 - (None currently)
 
 ### Documentation
-- (None currently)
+- (All documentation created as part of tasks ✅)
 
 ### Testing
 - (None currently)
 
 ### DevOps
-- (None currently)
+- Docker Compose Setup (Completed ✅)
+- Docker Container Monitoring & Management (Completed ✅)
+
+### Database
+- PostgreSQL Migration (Completed ✅)
+- Parquet to PostgreSQL Data Migration (Completed ✅)
 
 ---
 
 ## 📊 Task Statistics
 
-**Total Tasks**: 2
-**Active**: 1 (50%)
-**Completed**: 1 (50%)
+**Total Tasks**: 6
+**Active**: 0 (0%)
+**Completed**: 6 (100%)
 **Blocked**: 0 (0%)
 
+**Completion Rate**: 100%
+
 **By Priority**:
-- High: 1
-- Medium: 0
-- Low: 0
+- High: 0 active
+- Medium: 0 active
+- Low: 0 active
 
 ---
 
