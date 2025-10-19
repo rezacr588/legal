@@ -66,6 +66,90 @@ class GenerationService:
                 'answer_approach': 'Systematically explain the statute with case law showing its interpretation',
                 'focus': 'Understanding and applying legislation',
                 'example_context': 'Someone needs to understand what a statutory provision means and how it applies'
+            },
+            'legal_dialogue': {
+                'objective': 'Conduct multi-turn legal conversations demonstrating reasoning through dialogue',
+                'question_format': 'Present a conversational exchange about a legal topic or scenario',
+                'answer_approach': 'Use dialogue format (Q&A, discussion, debate) showing reasoning development',
+                'focus': 'Conversational AI with dialectical legal reasoning',
+                'example_context': 'A conversation between lawyer and client, or between opposing counsel discussing legal points'
+            },
+            'pure_conceptual': {
+                'objective': 'Provide factual legal knowledge without analytical reasoning (textbook-style)',
+                'question_format': 'Ask for definition, explanation, or description of legal concepts',
+                'answer_approach': 'Present clear, encyclopedic knowledge without case analysis or reasoning',
+                'focus': 'Knowledge retention and factual accuracy',
+                'example_context': 'A reference question asking what a legal term means or how a law developed historically'
+            },
+            'comparative_analysis': {
+                'objective': 'Compare different legal approaches, jurisdictions, or doctrines',
+                'question_format': 'Ask for comparison between legal systems, approaches, or concepts',
+                'answer_approach': 'Systematically compare and contrast with similarities and differences',
+                'focus': 'Critical thinking and analytical reasoning across legal systems',
+                'example_context': 'Someone wants to understand how different jurisdictions or doctrines differ'
+            },
+            'ethical_reasoning': {
+                'objective': 'Analyze ethical dilemmas and professional responsibility issues',
+                'question_format': 'Present an ethical scenario requiring moral and professional judgment',
+                'answer_approach': 'Apply ethical frameworks and professional conduct rules to the dilemma',
+                'focus': 'Moral reasoning within legal professional contexts',
+                'example_context': 'A lawyer faces an ethical dilemma requiring professional judgment'
+            },
+            'procedural_guide': {
+                'objective': 'Provide step-by-step procedural instructions for legal processes',
+                'question_format': 'Ask how to complete a specific legal procedure or process',
+                'answer_approach': 'Present sequential, actionable steps in chronological order',
+                'focus': 'Practical procedural knowledge and execution',
+                'example_context': 'Someone needs to know the exact steps to follow for a legal procedure'
+            },
+            'legal_news_analysis': {
+                'objective': 'Analyze recent legal developments and their implications',
+                'question_format': 'Present a recent court decision, legislation, or regulatory change',
+                'answer_approach': 'Analyze the development, its legal basis, and practical implications',
+                'focus': 'Current legal affairs and forward-looking analysis',
+                'example_context': 'A recent Supreme Court ruling or new legislation has been announced'
+            },
+            'case_study': {
+                'objective': 'Provide comprehensive analysis of landmark cases',
+                'question_format': 'Ask for in-depth analysis of a significant legal case',
+                'answer_approach': 'Thoroughly examine facts, legal issues, reasoning, and broader implications',
+                'focus': 'Deep legal learning through case examination',
+                'example_context': 'A landmark case needs detailed analysis for educational purposes'
+            },
+            'practical_application': {
+                'objective': 'Address real-world legal scenarios in specific practice domains',
+                'question_format': 'Present practical scenarios in immigration, criminal, family law, etc.',
+                'answer_approach': 'Provide actionable legal guidance tailored to the specific domain',
+                'focus': 'Domain-specific practical legal problem-solving',
+                'example_context': 'A client needs practical guidance in immigration, criminal defense, or family matters'
+            },
+            'simple_qa': {
+                'objective': 'Provide direct, concise answers to straightforward legal questions',
+                'question_format': 'Ask a simple, direct question requiring a factual answer',
+                'answer_approach': 'Give a clear, concise answer without complex structure',
+                'focus': 'Quick factual knowledge and simple explanations',
+                'example_context': 'Someone needs a quick factual answer or brief explanation'
+            },
+            'general_reasoning': {
+                'objective': 'Explain legal principles and reasoning without rigid structure',
+                'question_format': 'Ask about legal concepts, reasoning, or principles',
+                'answer_approach': 'Provide flexible, thoughtful reasoning without mandatory format',
+                'focus': 'Natural legal reasoning and explanation',
+                'example_context': 'Someone wants to understand the reasoning behind a legal principle'
+            },
+            'hypothetical': {
+                'objective': 'Analyze brief hypothetical scenarios concisely',
+                'question_format': 'Present a short "what if" legal scenario',
+                'answer_approach': 'Provide concise analysis without extensive structure',
+                'focus': 'Quick scenario analysis and legal thinking',
+                'example_context': 'Someone poses a hypothetical situation requiring quick legal analysis'
+            },
+            'conversational': {
+                'objective': 'Respond like a professional lawyer in natural conversation',
+                'question_format': 'Question requiring professional but conversational response',
+                'answer_approach': 'Sound like an experienced lawyer speaking naturally - professional yet approachable',
+                'focus': 'Professional legal voice in everyday conversation',
+                'example_context': 'Client or colleague asks a question in conversation'
             }
         }
 
@@ -115,7 +199,152 @@ class GenerationService:
    │ PURPOSE: Explain the legislation's objective and policy rationale
    │ INTERPRETATION: Break down key terms and their legal meaning
    │ CASE LAW: Show how courts have interpreted and applied the statute
-   │ APPLICATION: Demonstrate how the statute applies in practice"""
+   │ APPLICATION: Demonstrate how the statute applies in practice""",
+
+            'legal_dialogue': """Dialogue Format (MANDATORY)
+   Your answer should follow this conversational structure:
+
+   │ OPENING: Start the dialogue with initial question or statement
+   │ EXCHANGE 1: First response with reasoning or clarification
+   │ FOLLOW-UP: Build on previous point with deeper questioning
+   │ EXCHANGE 2: Develop reasoning through discussion
+   │ RESOLUTION: Conclude dialogue with synthesized understanding
+
+   Format each turn as:
+   [Speaker]: [Statement/Question]
+
+   Example:
+   Client: [question]
+   Lawyer: [response with reasoning]
+   Client: [follow-up]
+   Lawyer: [deeper analysis]""",
+
+            'pure_conceptual': """Encyclopedic Knowledge Format (MANDATORY)
+   Your answer should follow this factual structure:
+
+   │ CORE DEFINITION: Precise definition of the concept/term
+   │ HISTORICAL CONTEXT: When and how this law/concept developed
+   │ STATUTORY/DOCTRINAL BASIS: Legal foundation (acts, cases)
+   │ KEY FEATURES: Essential characteristics and elements
+   │ SCOPE AND LIMITS: What it covers and what it doesn't
+
+   NOTE: NO reasoning steps needed - focus on factual knowledge only""",
+
+            'comparative_analysis': """Comparative Structure (MANDATORY)
+   Your answer should follow this comparative framework:
+
+   │ INTRODUCTION: State what is being compared and why
+   │ APPROACH A: Explain first jurisdiction/doctrine/approach
+   │ APPROACH B: Explain second jurisdiction/doctrine/approach
+   │ SIMILARITIES: Identify common elements and shared principles
+   │ DIFFERENCES: Contrast key distinctions and divergences
+   │ ANALYSIS: Evaluate strengths and weaknesses of each
+   │ CONCLUSION: Synthesize insights from comparison""",
+
+            'ethical_reasoning': """Ethical Analysis Structure (MANDATORY)
+   Your answer should follow this ethical reasoning framework:
+
+   │ ETHICAL DILEMMA: Identify the core ethical conflict
+   │ PROFESSIONAL DUTIES: State relevant professional conduct rules
+   │ COMPETING VALUES: Identify conflicting obligations or principles
+   │ FRAMEWORKS: Apply ethical theories (deontology, consequentialism, virtue ethics)
+   │ PRACTICAL CONSIDERATIONS: Assess real-world implications
+   │ RESOLUTION: Recommend course of action with moral justification""",
+
+            'procedural_guide': """Step-by-Step Procedural Format (MANDATORY)
+   Your answer should follow this sequential structure:
+
+   │ OVERVIEW: Brief summary of the procedure and its purpose
+   │ PREREQUISITES: What must be in place before starting
+   │ STEP 1: [First action with details]
+   │ STEP 2: [Second action with details]
+   │ STEP 3: [Third action with details]
+   │ ... [Continue with all necessary steps]
+   │ FINAL STEP: [Concluding action]
+   │ IMPORTANT NOTES: Time limits, forms, fees, or special requirements
+
+   Each step should be actionable and specific""",
+
+            'legal_news_analysis': """Legal News Analysis Format (MANDATORY)
+   Your answer should follow this current affairs structure:
+
+   │ THE DEVELOPMENT: Describe the recent legal development (case, legislation, regulation)
+   │ BACKGROUND: Provide context and previous legal position
+   │ KEY CHANGES: Identify what has changed and why
+   │ LEGAL REASONING: Explain the court's/legislature's reasoning
+   │ IMPLICATIONS: Analyze practical impact on law and practice
+   │ FUTURE OUTLOOK: Discuss potential future developments
+
+   Focus on contemporary relevance and practical impact""",
+
+            'case_study': """Case Study Format (MANDATORY)
+   Your answer should follow this comprehensive analytical structure:
+
+   │ CASE OVERVIEW: Name, citation, court, date, and significance
+   │ FACTS: Detailed factual background
+   │ LEGAL ISSUES: Central questions of law presented
+   │ COURT'S REASONING: Detailed analysis of judicial reasoning
+   │ JUDGMENT: The decision and its immediate legal effect
+   │ BROADER IMPLICATIONS: Impact on legal doctrine and practice
+   │ SUBSEQUENT TREATMENT: How later cases have applied/distinguished it
+
+   Provide comprehensive educational analysis""",
+
+            'practical_application': """Practical Application Format (MANDATORY)
+   Your answer should follow this domain-specific structure:
+
+   │ SCENARIO ASSESSMENT: Understand the specific domain context
+   │ APPLICABLE LAW: State relevant law for this domain (immigration/criminal/family/etc.)
+   │ PRACTICAL ANALYSIS: Apply law to the specific scenario
+   │ AVAILABLE OPTIONS: Present domain-specific options and strategies
+   │ RECOMMENDED APPROACH: Provide practical guidance
+   │ PROCEDURAL STEPS: Outline immediate actions required
+   │ RISKS AND CONSIDERATIONS: Highlight domain-specific challenges
+
+   Tailor advice to the specific legal domain""",
+
+            'simple_qa': """Simple Q&A Format (NO COMPLEX STRUCTURE REQUIRED)
+   Your answer should be:
+
+   │ Direct and concise (2-4 sentences maximum)
+   │ Answer the question clearly without IRAC or formal structure
+   │ Include key legal authority (case/statute) if relevant
+   │ DO NOT use sections like ISSUE, RULE, APPLICATION, CONCLUSION
+   │ Just state the answer plainly
+
+   ⚠️  CRITICAL: This is a SIMPLE Q&A - do NOT write a complex legal analysis!
+   Keep it straightforward like answering a quick question - no essays!""",
+
+            'general_reasoning': """General Reasoning Format (FLEXIBLE STRUCTURE)
+   Your answer should naturally explain the reasoning:
+
+   │ Start with the core principle or concept
+   │ Explain the reasoning or rationale
+   │ Provide examples if helpful
+   │ Reference relevant law naturally
+
+   No rigid structure - write naturally and clearly""",
+
+            'hypothetical': """Hypothetical Format (BRIEF AND CONCISE)
+   Your answer should:
+
+   │ Quickly identify the legal issue
+   │ Apply relevant law concisely
+   │ State the likely outcome
+   │ Brief explanation (2-3 sentences)
+
+   Keep it short and to the point - this is a quick analysis""",
+
+            'conversational': """Professional Legal Conversation (LAWYER VOICE)
+   Your answer should sound like a professional lawyer speaking naturally:
+
+   │ Professional but approachable tone
+   │ Use legal terminology naturally (as lawyers do in conversation)
+   │ Confident and knowledgeable delivery
+   │ Brief and conversational - no formal sections
+   │ Reference law casually when relevant
+
+   Write how an experienced lawyer would explain something in conversation - professional, clear, authoritative yet natural!"""
         }
 
         return structures.get(sample_type, structures['case_analysis'])
@@ -153,7 +382,24 @@ class GenerationService:
             return None, 0, 0, f"Unknown provider: {provider}"
 
         # Validate sample_type (exclude 'balance' - it should be converted before reaching here)
-        valid_sample_types = ['case_analysis', 'educational', 'client_interaction', 'statutory_interpretation']
+        valid_sample_types = [
+            'case_analysis',
+            'educational',
+            'client_interaction',
+            'statutory_interpretation',
+            'legal_dialogue',
+            'pure_conceptual',
+            'comparative_analysis',
+            'ethical_reasoning',
+            'procedural_guide',
+            'legal_news_analysis',
+            'case_study',
+            'practical_application',
+            'simple_qa',
+            'general_reasoning',
+            'hypothetical',
+            'conversational'
+        ]
         if sample_type not in valid_sample_types:
             return None, 0, 0, f"Invalid sample_type: {sample_type}. Valid types: {', '.join(valid_sample_types)} (Note: 'balance' should be converted to a specific type before generation)"
 
@@ -186,63 +432,124 @@ class GenerationService:
         if reasoning_instruction:
             reasoning_req = f"\n- ADDITIONAL REQUIREMENT: {reasoning_instruction}"
 
-        # Build dynamic structure validation based on sample_type
-        if sample_type == 'case_analysis':
-            structure_validation = "☐ 2. IRAC structure: Answer follows Issue → Rule → Application → Conclusion"
-            reasoning_guidance = "Demonstrate IRAC progression through steps"
-        elif sample_type == 'educational':
-            structure_validation = "☐ 2. Educational structure: Answer follows Definition → Legal Basis → Key Elements → Examples → Distinctions"
-            reasoning_guidance = "Show progression from definition to practical application"
-        elif sample_type == 'client_interaction':
-            structure_validation = "☐ 2. Client communication structure: Answer follows Understanding → Legal Position → Options → Recommendation → Next Steps"
-            reasoning_guidance = "Show client-focused reasoning from understanding to action"
-        elif sample_type == 'statutory_interpretation':
-            structure_validation = "☐ 2. Statutory analysis structure: Answer follows Statutory Text → Purpose → Interpretation → Case Law → Application"
-            reasoning_guidance = "Show progression from statutory text to practical application"
+        # Build dynamic structure validation based on sample_type (MUST be before reasoning_section)
+        structure_validations = {
+            'case_analysis': (
+                "☐ 2. IRAC structure: Answer follows Issue → Rule → Application → Conclusion",
+                "Demonstrate IRAC progression through steps"
+            ),
+            'educational': (
+                "☐ 2. Educational structure: Answer follows Definition → Legal Basis → Key Elements → Examples → Distinctions",
+                "Show progression from definition to practical application"
+            ),
+            'client_interaction': (
+                "☐ 2. Client communication structure: Answer follows Understanding → Legal Position → Options → Recommendation → Next Steps",
+                "Show client-focused reasoning from understanding to action"
+            ),
+            'statutory_interpretation': (
+                "☐ 2. Statutory analysis structure: Answer follows Statutory Text → Purpose → Interpretation → Case Law → Application",
+                "Show progression from statutory text to practical application"
+            ),
+            'legal_dialogue': (
+                "☐ 2. Dialogue structure: Answer uses conversational format with Opening → Exchange → Follow-up → Resolution",
+                "Show reasoning development through multi-turn dialogue"
+            ),
+            'pure_conceptual': (
+                "☐ 2. Encyclopedic structure: Answer follows Core Definition → Historical Context → Statutory Basis → Key Features → Scope",
+                "Present factual knowledge systematically (NO reasoning steps needed)"
+            ),
+            'comparative_analysis': (
+                "☐ 2. Comparative structure: Answer follows Introduction → Approach A → Approach B → Similarities → Differences → Analysis → Conclusion",
+                "Show comparative reasoning across jurisdictions or doctrines"
+            ),
+            'ethical_reasoning': (
+                "☐ 2. Ethical analysis structure: Answer follows Ethical Dilemma → Professional Duties → Competing Values → Frameworks → Resolution",
+                "Show moral reasoning through ethical frameworks"
+            ),
+            'procedural_guide': (
+                "☐ 2. Procedural structure: Answer follows Overview → Prerequisites → Step-by-step instructions → Important Notes",
+                "Show sequential procedural progression"
+            ),
+            'legal_news_analysis': (
+                "☐ 2. Legal news structure: Answer follows The Development → Background → Key Changes → Legal Reasoning → Implications → Future Outlook",
+                "Show analysis of contemporary legal developments"
+            ),
+            'case_study': (
+                "☐ 2. Case study structure: Answer follows Case Overview → Facts → Legal Issues → Court's Reasoning → Judgment → Broader Implications → Subsequent Treatment",
+                "Show comprehensive case analysis for legal learning"
+            ),
+            'practical_application': (
+                "☐ 2. Practical application structure: Answer follows Scenario Assessment → Applicable Law → Practical Analysis → Options → Recommended Approach → Procedural Steps → Risks",
+                "Show domain-specific practical problem-solving"
+            ),
+            'simple_qa': (
+                "☐ 2. Simple Q&A: Answer is direct and concise (no complex structure required)",
+                "Provide clear, straightforward answer"
+            ),
+            'general_reasoning': (
+                "☐ 2. General reasoning: Answer naturally explains the reasoning (flexible structure)",
+                "Explain reasoning naturally without rigid format"
+            ),
+            'hypothetical': (
+                "☐ 2. Hypothetical: Answer is brief and to the point (concise analysis)",
+                "Provide quick, focused analysis"
+            ),
+            'conversational': (
+                "☐ 2. Conversational: Answer sounds like a professional lawyer speaking naturally (no formal structure)",
+                "Sound professional yet natural in conversation"
+            )
+        }
+
+        structure_validation, reasoning_guidance = structure_validations.get(
+            sample_type,
+            ("☐ 2. Answer structure: Follow the specified format for this sample type",
+             "Demonstrate logical progression through steps")
+        )
+
+        # Add special warning and adjust word count for simple types
+        simple_warning = ""
+        depth_guidance = f"Minimum {diff_spec['min_words']} words"
+        simple_types_warning = ['simple_qa', 'hypothetical', 'conversational']
+
+        if sample_type in simple_types_warning:
+            simple_warning = f"""
+⚠️  CRITICAL WARNING FOR {sample_type.upper()}:
+   DO NOT generate a long, complex legal analysis!
+   DO NOT use ISSUE, RULE, APPLICATION, CONCLUSION sections!
+   DO NOT write an essay - keep your answer BRIEF and DIRECT!
+   This is a {sample_type} sample - simplicity is required!
+"""
+            # Override word count for simple types
+            if sample_type == 'simple_qa':
+                depth_guidance = "Keep answer brief: 50-100 words (2-4 sentences)"
+            elif sample_type == 'hypothetical':
+                depth_guidance = "Keep answer concise: 100-150 words maximum"
+            elif sample_type == 'conversational':
+                depth_guidance = "Keep response natural: 100-200 words (conversational length)"
+
+        # Build examples section based on sample type
+        if sample_type == 'simple_qa':
+            examples_section = """
+╔══════════════════════════════════════════════════════════════╗
+║ SIMPLE Q&A EXAMPLES (Keep it this brief!)                   ║
+╚══════════════════════════════════════════════════════════════╝
+
+EXAMPLE (Simple Q&A):
+{
+    "question": "What is the limitation period for breach of contract claims in England?",
+    "answer": "Under the Limitation Act 1980, the limitation period for breach of contract claims is six years from the date of the breach. This applies to simple contracts. For contracts made by deed, the period is 12 years.",
+    "reasoning": "The Limitation Act 1980 sets statutory time limits for bringing claims. For contract breaches, the six-year period starts when the breach occurs, giving claimants a reasonable window to pursue remedies while ensuring defendants aren't exposed to indefinite liability."
+}"""
+        elif sample_type in ['hypothetical', 'conversational']:
+            examples_section = f"""
+╔══════════════════════════════════════════════════════════════╗
+║ {sample_type.upper()} EXAMPLE (Keep it brief!)              ║
+╚══════════════════════════════════════════════════════════════╝
+
+⚠️  Remember: This is {sample_type} - NO long IRAC analysis needed!
+Keep your answer SHORT and DIRECT."""
         else:
-            structure_validation = "☐ 2. Answer structure: Follow the specified format for this sample type"
-            reasoning_guidance = "Demonstrate logical progression through steps"
-
-        prompt = f"""You are a UK legal expert creating high-quality training data for an AI legal assistant. Your samples will train LLMs to provide accurate legal guidance to UK lawyers and clients.
-
-╔══════════════════════════════════════════════════════════════╗
-║ GENERATION TASK                                              ║
-╚══════════════════════════════════════════════════════════════╝
-
-Practice Area: {practice_area}
-Specific Topic: {topic}
-Difficulty Level: {difficulty} ({diff_spec['description']})
-Sample Type: {sample_type_config['name']}
-Type Objective: {type_guide['objective']}
-Question Format: {type_guide['question_format']}
-Context: {scenario_text}
-
-╔══════════════════════════════════════════════════════════════╗
-║ QUALITY STANDARDS (Research-Based 2024-2025)                ║
-╚══════════════════════════════════════════════════════════════╝
-
-1. ANSWER STRUCTURE
-   {self._get_answer_structure_guidance(sample_type)}
-
-2. ANSWER DEPTH - Minimum {diff_spec['min_words']} words
-   - Comprehensive legal analysis appropriate for {difficulty} level
-   - Complexity: {diff_spec['complexity']}
-   - Balance depth with clarity (avoid excessive verbosity)
-
-3. CITATIONS - Minimum {diff_spec['min_citations']} distinct authorities
-   - Format: [Case Name] [Year] [Court] [Reporter] [Page]
-   - Example: "Carlill v Carbolic Smoke Ball [1893] 1 QB 256"
-   - Mix: Include BOTH cases AND statutes where relevant
-   - PROHIBITED: Fabricated cases, outdated law, non-UK authorities
-   - ONLY use real, verifiable UK legal authorities
-
-4. REASONING - Chain-of-Thought Analysis
-   - Minimum {diff_spec['reasoning_steps']} steps
-   - Each step format: "Step X: [legal principle] → [application to facts] → [intermediate conclusion]"
-   - Connect steps logically (each builds on previous)
-   - Reference specific cases/statutes within reasoning steps
-   - {reasoning_guidance}{reasoning_req}
-
+            examples_section = """
 ╔══════════════════════════════════════════════════════════════╗
 ║ FEW-SHOT EXAMPLES (Learn from these)                        ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -261,19 +568,83 @@ EXAMPLE 1 (Basic Difficulty):
     "case_citation": "Law of Property (Miscellaneous Provisions) Act 1989, Section 2; McCausland v Duncan Lawrie Ltd [1997] 1 WLR 38",
     "reasoning": "Step 1: Identify the governing statute - Section 2 of the Law of Property (Miscellaneous Provisions) Act 1989 requires written contracts for land sales → verbal agreements are insufficient. Step 2: Apply *McCausland v Duncan Lawrie Ltd* [1997] 1 WLR 38 - court held Section 2 renders oral contracts void, not voidable → formality requirement is absolute. Step 3: Assess deposit payment significance - while showing intent, deposit cannot satisfy writing requirement → part performance doctrine abolished by Section 2. Step 4: Determine enforceability - absence of written signed contract means agreement is void → neither party can enforce specific performance. Step 5: Consider buyer's remedies - buyer may recover deposit under unjust enrichment principles → restitution available but not contract enforcement.",
     "sample_type": "case_analysis"
-}}
+}}"""
 
-EXAMPLE 2 (Advanced Difficulty):
-{{
-    "id": "example_002",
-    "question": "A director of a technology company personally guaranteed a loan to the company. The company later entered administration. Can the director argue that the guarantee was given under undue influence from the company's CEO, who is also her spouse?",
-    "answer": "**ISSUE**: Whether a personal guarantee can be set aside on grounds of undue influence where the guarantor-director is the spouse of the CEO who requested the guarantee. **RULE**: The doctrine of undue influence, governed by *Royal Bank of Scotland v Etridge (No 2)* [2001] UKHL 44, recognizes two categories: actual undue influence (proven coercion) and presumed undue influence (arising from relationships of trust). When a guarantee is given for another's debt in a relationship where influence may be exercised (spousal relationship), the court presumes undue influence unless rebutted. However, *Pesticcio v Huet* [2004] EWCA Civ 372 establishes that directors are expected to understand commercial transactions given their fiduciary position. The Insolvency Act 1986 also permits administrators to challenge transactions at undervalue or preferences. **APPLICATION**: Here, the director-wife gave a personal guarantee for the company's loan at the request of her CEO-husband. While *Etridge* would normally raise a presumption of undue influence in a spousal transaction, *Pesticcio* complicates this. As a director, she owed fiduciary duties to the company and is presumed to understand the commercial implications of guarantees. The court in *Pesticcio* held that directors cannot easily claim undue influence in commercial dealings given their sophistication. However, if she can demonstrate she received no independent legal advice, and the CEO-husband actively concealed risks or pressured her, actual undue influence under *Etridge* may be established. The burden shifts to the lender to show reasonable steps were taken to ensure she understood the guarantee (e.g., requiring independent advice). **CONCLUSION**: The director faces significant hurdles due to her fiduciary status under *Pesticcio*, which presumes commercial sophistication. However, if she proves actual undue influence (coercion, lack of independent advice, concealment of material facts) under *Etridge*, the guarantee may be voidable. The outcome depends on evidence of pressure and whether the lender ensured she had independent legal advice. In administration, the administrator may also examine whether the guarantee constituted a transaction at undervalue under the Insolvency Act 1986.",
-    "topic": "Company Law - Directors' Duties and Undue Influence",
-    "difficulty": "advanced",
-    "case_citation": "Royal Bank of Scotland v Etridge (No 2) [2001] UKHL 44; Pesticcio v Huet [2004] EWCA Civ 372; Insolvency Act 1986",
-    "reasoning": "Step 1: Establish undue influence framework - *Royal Bank of Scotland v Etridge (No 2)* [2001] UKHL 44 sets out two categories: actual undue influence (proven coercion) and presumed undue influence (from relationships of trust) → spousal relationships create presumption. Step 2: Consider director's fiduciary position - *Pesticcio v Huet* [2004] EWCA Civ 372 held directors are sophisticated parties who understand commercial transactions → presumption of undue influence harder to establish for directors. Step 3: Assess evidence requirements - must prove actual pressure, lack of independent advice, concealment of risks → burden on director to demonstrate CEO-husband's improper influence. Step 4: Evaluate lender's duties - under *Etridge*, lender must take reasonable steps to ensure guarantor understood obligation (e.g., require independent legal advice) → failure may render guarantee voidable. Step 5: Apply insolvency law considerations - Insolvency Act 1986 allows administrator to challenge transactions at undervalue or preferences → additional avenue for challenging guarantee. Step 6: Balance competing doctrines - tension between *Etridge* (protecting vulnerable parties) and *Pesticcio* (holding directors to higher standard) → outcome depends on evidence of actual coercion versus commercial sophistication. Step 7: Determine likely outcome - director must prove actual undue influence given her fiduciary status → if successful and lender failed to ensure independent advice, guarantee may be set aside.",
-    "sample_type": "case_analysis"
-}}
+        # Build reasoning section based on sample type (MUST be after reasoning_guidance is defined)
+        # Simple types don't need complex reasoning structure
+        simple_types = ['pure_conceptual', 'simple_qa', 'hypothetical', 'conversational']
+
+        if sample_type in simple_types:
+            if sample_type == 'pure_conceptual':
+                reasoning_section = f"""4. FACTUAL KNOWLEDGE PRESENTATION
+   - Focus on encyclopedic accuracy and clarity
+   - Present information systematically without analytical reasoning
+   - The 'reasoning' field should briefly explain how the concept developed or its logical structure
+   - No "Step 1, Step 2" format needed{reasoning_req}"""
+            elif sample_type == 'simple_qa':
+                reasoning_section = f"""4. BRIEF EXPLANATION (OPTIONAL)
+   - The 'reasoning' field can contain a brief explanation of your answer
+   - No complex step-by-step analysis needed
+   - Keep it simple and direct{reasoning_req}"""
+            elif sample_type == 'hypothetical':
+                reasoning_section = f"""4. QUICK REASONING (CONCISE)
+   - Briefly explain the legal reasoning (2-3 steps maximum)
+   - Keep it concise and focused
+   - No extensive chain-of-thought needed{reasoning_req}"""
+            elif sample_type == 'conversational':
+                reasoning_section = f"""4. INFORMAL REASONING (NATURAL)
+   - The 'reasoning' field should explain your thinking informally
+   - Write how a lawyer would explain their reasoning in conversation
+   - No step format needed - just natural explanation{reasoning_req}"""
+        elif sample_type == 'general_reasoning':
+            reasoning_section = f"""4. FLEXIBLE REASONING
+   - Explain the reasoning naturally without rigid step format
+   - Can use informal steps or flowing explanation
+   - Focus on clarity over format
+   - {reasoning_guidance}{reasoning_req}"""
+        else:
+            reasoning_section = f"""4. REASONING - Chain-of-Thought Analysis
+   - Minimum {diff_spec['reasoning_steps']} steps
+   - Each step format: "Step X: [legal principle] → [application to facts] → [intermediate conclusion]"
+   - Connect steps logically (each builds on previous)
+   - Reference specific cases/statutes within reasoning steps
+   - {reasoning_guidance}{reasoning_req}"""
+
+        prompt = f"""You are a UK legal expert creating high-quality training data for an AI legal assistant. Your samples will train LLMs to provide accurate legal guidance to UK lawyers and clients.
+
+╔══════════════════════════════════════════════════════════════╗
+║ GENERATION TASK                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+Practice Area: {practice_area}
+Specific Topic: {topic}
+Difficulty Level: {difficulty} ({diff_spec['description']})
+Sample Type: {sample_type_config['name']}
+Type Objective: {type_guide['objective']}
+Question Format: {type_guide['question_format']}
+Context: {scenario_text}
+
+╔══════════════════════════════════════════════════════════════╗
+║ QUALITY STANDARDS (Research-Based 2024-2025)                ║
+╚══════════════════════════════════════════════════════════════╝
+{simple_warning}
+1. ANSWER STRUCTURE
+   {self._get_answer_structure_guidance(sample_type)}
+
+2. ANSWER DEPTH - {depth_guidance}
+   - Legal content appropriate for {difficulty} level
+   - Complexity: {diff_spec['complexity']}
+   - Balance depth with clarity (avoid excessive verbosity)
+
+3. CITATIONS - Minimum {diff_spec['min_citations']} distinct authorities
+   - Format: [Case Name] [Year] [Court] [Reporter] [Page]
+   - Example: "Carlill v Carbolic Smoke Ball [1893] 1 QB 256"
+   - Mix: Include BOTH cases AND statutes where relevant
+   - PROHIBITED: Fabricated cases, outdated law, non-UK authorities
+   - ONLY use real, verifiable UK legal authorities
+
+{reasoning_section}
+{examples_section}
 
 ╔══════════════════════════════════════════════════════════════╗
 ║ DIVERSITY REQUIREMENTS                                       ║
@@ -414,14 +785,27 @@ Generate NOW:"""
         # 2. REMOVED: Citation count validation - not all questions require case citations
 
         # 3. Validate reasoning steps - CORE QUALITY INDICATOR
-        step_count = len(re.findall(r'Step \d+:', reasoning))
-        min_steps = int(diff_spec['reasoning_steps'].split('-')[0])
-        if step_count < min_steps:
-            return f"Insufficient reasoning steps: {step_count} found (minimum {min_steps} required)"
+        # Exception: Simple types don't need formal reasoning steps
+        sample_type = sample.get('sample_type', 'case_analysis')
+        simple_types_no_reasoning = ['pure_conceptual', 'simple_qa', 'hypothetical', 'conversational']
+
+        if sample_type not in simple_types_no_reasoning:
+            step_count = len(re.findall(r'Step \d+:', reasoning))
+            min_steps = int(diff_spec['reasoning_steps'].split('-')[0])
+
+            # General reasoning can be flexible - allow lower threshold
+            if sample_type == 'general_reasoning':
+                min_steps = max(2, min_steps - 2)  # Reduce requirement by 2 steps
+
+            if step_count < min_steps:
+                return f"Insufficient reasoning steps: {step_count} found (minimum {min_steps} required for {sample_type})"
 
         # 4. Check for empty fields (critical content must exist)
-        if not answer or not reasoning:
-            return "Answer or reasoning is empty"
+        # Exception: pure_conceptual can have minimal/no reasoning field
+        if not answer:
+            return "Answer is empty"
+        if sample_type != 'pure_conceptual' and not reasoning:
+            return "Reasoning is empty"
 
         # Note: case_citation can be empty for questions that don't require case law
 
@@ -473,6 +857,66 @@ Generate NOW:"""
             'statutory_interpretation': {
                 'keywords': ['STATUTORY TEXT', 'PURPOSE', 'INTERPRETATION', 'APPLICATION'],
                 'min_required': 3
+            },
+            'legal_dialogue': {
+                # More flexible - check for dialogue indicators
+                'keywords': ['LAWYER:', 'CLIENT:', 'COUNSEL:', 'JUDGE:', 'Q:', 'A:'],
+                'min_required': 2  # Must have at least 2 speakers/turns
+            },
+            'pure_conceptual': {
+                # Factual knowledge structure
+                'keywords': ['DEFINITION', 'HISTORICAL', 'BASIS', 'FEATURES', 'SCOPE'],
+                'min_required': 3  # More lenient for factual content
+            },
+            'comparative_analysis': {
+                # Comparison structure
+                'keywords': ['INTRODUCTION', 'APPROACH', 'SIMILARITIES', 'DIFFERENCES', 'ANALYSIS'],
+                'min_required': 3
+            },
+            'ethical_reasoning': {
+                # Ethical analysis structure
+                'keywords': ['DILEMMA', 'DUTIES', 'VALUES', 'FRAMEWORK', 'RESOLUTION'],
+                'min_required': 3
+            },
+            'procedural_guide': {
+                # Step-by-step procedural structure
+                'keywords': ['OVERVIEW', 'STEP', 'PREREQUISITES', 'PROCEDURE', 'NOTES'],
+                'min_required': 2  # Must have overview and steps
+            },
+            'legal_news_analysis': {
+                # Legal news and developments structure
+                'keywords': ['DEVELOPMENT', 'BACKGROUND', 'CHANGES', 'REASONING', 'IMPLICATIONS', 'OUTLOOK'],
+                'min_required': 3
+            },
+            'case_study': {
+                # Case study structure
+                'keywords': ['OVERVIEW', 'FACTS', 'ISSUES', 'REASONING', 'JUDGMENT', 'IMPLICATIONS'],
+                'min_required': 4  # More comprehensive analysis required
+            },
+            'practical_application': {
+                # Practical domain-specific structure
+                'keywords': ['ASSESSMENT', 'APPLICABLE', 'ANALYSIS', 'OPTIONS', 'APPROACH', 'STEPS', 'RISKS'],
+                'min_required': 3
+            },
+            'simple_qa': {
+                # Simple Q&A - no structure required
+                'keywords': [],  # No mandatory keywords
+                'min_required': 0
+            },
+            'general_reasoning': {
+                # General reasoning - flexible
+                'keywords': [],
+                'min_required': 0
+            },
+            'hypothetical': {
+                # Hypothetical - flexible
+                'keywords': [],
+                'min_required': 0
+            },
+            'conversational': {
+                # Conversational - no structure required
+                'keywords': [],
+                'min_required': 0
             }
         }
 

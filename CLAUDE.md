@@ -31,7 +31,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **UUID-based IDs**: Cryptographically unique sample identifiers
 - **Cross-provider failover**: Automatic provider switching
 - **Comprehensive error handling**: 7 error categories with intelligent recovery
-- **Sample Types System**: 4 distinct sample types (case_analysis, educational, client_interaction, statutory_interpretation)
+- **Sample Types System**: 9 distinct sample types including core legal types (case_analysis, educational, client_interaction, statutory_interpretation) and advanced reasoning types (legal_dialogue, pure_conceptual, comparative_analysis, ethical_reasoning, procedural_guide)
 - Port 5000 or 5001 - MUST run from `legal-dashboard/` directory
 - Dependencies: `flask`, `flask-cors`, `flask-sqlalchemy`, `polars`, `groq`, `cerebras_cloud_sdk`, `tiktoken`, `huggingface_hub`
 
@@ -526,10 +526,21 @@ new_df.write_parquet("train.parquet", compression="zstd")
 - Automatic provider switching when all models in current provider exhausted
 
 **2. Sample Types System:**
-- 4 distinct sample types with unique answer structures
+- 9 distinct sample types with unique answer structures for comprehensive training
 - Type-specific prompts and validation logic in `GenerationService`
-- Types: `case_analysis` (IRAC), `educational` (teaching), `client_interaction` (practical advice), `statutory_interpretation` (legislative analysis)
+- **Core Legal Types**:
+  - `case_analysis` (IRAC methodology)
+  - `educational` (structured teaching)
+  - `client_interaction` (practical advice)
+  - `statutory_interpretation` (legislative analysis)
+- **Advanced Reasoning Types**:
+  - `legal_dialogue` (multi-turn conversations for dialectical reasoning)
+  - `pure_conceptual` (encyclopedic knowledge without reasoning - textbook style)
+  - `comparative_analysis` (cross-jurisdiction/doctrine comparisons)
+  - `ethical_reasoning` (professional conduct and moral dilemmas)
+  - `procedural_guide` (step-by-step procedural instructions)
 - Configurable per-sample or per-batch via API parameters
+- Special handling: `pure_conceptual` type doesn't require reasoning steps
 
 **3. Enhanced Generation Architecture:**
 - Circuit breaker pattern prevents repeated failures (3 failures → 5-minute pause per topic)

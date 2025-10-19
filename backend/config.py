@@ -291,16 +291,105 @@ SAMPLE_TYPES: Dict[str, Dict] = {
         'focus': 'Understanding legislation',
         'example': 'Explain Section 172 of the Companies Act 2006'
     },
+    'legal_dialogue': {
+        'name': 'Legal Dialogue',
+        'description': 'Multi-turn conversations and dialectical reasoning',
+        'focus': 'Conversational AI with legal context and general reasoning',
+        'example': 'Dialogue between lawyer and client, or between counsel in court'
+    },
+    'pure_conceptual': {
+        'name': 'Pure Conceptual Knowledge',
+        'description': 'Factual legal knowledge without reasoning (like textbooks)',
+        'focus': 'Knowledge retention and retrieval',
+        'example': 'Define key legal terms, explain historical development of law'
+    },
+    'comparative_analysis': {
+        'name': 'Comparative Legal Analysis',
+        'description': 'Compare legal approaches, jurisdictions, or doctrines',
+        'focus': 'Critical thinking and analytical reasoning',
+        'example': 'Compare UK and US approaches to contract consideration'
+    },
+    'ethical_reasoning': {
+        'name': 'Legal Ethics & Professional Conduct',
+        'description': 'Ethical dilemmas and professional responsibility',
+        'focus': 'Moral reasoning within legal frameworks',
+        'example': 'Should a lawyer report a client\'s fraud?'
+    },
+    'procedural_guide': {
+        'name': 'Procedural Step-by-Step Guide',
+        'description': 'Sequential procedural instructions',
+        'focus': 'Practical procedural knowledge',
+        'example': 'Steps to file a claim in the County Court'
+    },
+    'legal_news_analysis': {
+        'name': 'Legal News & Recent Developments',
+        'description': 'Analysis of recent legal developments, court rulings, and regulatory changes',
+        'focus': 'Current legal affairs and their implications',
+        'example': 'Supreme Court decision on privacy rights or new immigration regulations'
+    },
+    'case_study': {
+        'name': 'In-Depth Case Study',
+        'description': 'Comprehensive analysis of landmark cases with broader legal implications',
+        'focus': 'Deep case analysis for legal learning',
+        'example': 'Analysis of a Supreme Court decision and its impact on future cases'
+    },
+    'practical_application': {
+        'name': 'Practical Legal Application',
+        'description': 'Real-world application in specific domains (immigration, criminal, family, etc.)',
+        'focus': 'Domain-specific practical legal scenarios',
+        'example': 'Navigating visa applications or defending criminal charges'
+    },
+    'simple_qa': {
+        'name': 'Simple Q&A',
+        'description': 'Direct question and answer without complex structure',
+        'focus': 'Quick factual answers and simple explanations',
+        'example': 'What is the statute of limitations for contract claims?'
+    },
+    'general_reasoning': {
+        'name': 'General Legal Reasoning',
+        'description': 'General reasoning about legal principles without rigid structure',
+        'focus': 'Flexible reasoning and explanation',
+        'example': 'Why do courts require consideration in contracts?'
+    },
+    'hypothetical': {
+        'name': 'Legal Hypothetical',
+        'description': 'Brief hypothetical scenarios with concise analysis',
+        'focus': 'Quick scenario-based thinking',
+        'example': 'If X happens, what are the legal consequences?'
+    },
+    'conversational': {
+        'name': 'Professional Legal Conversation',
+        'description': 'Natural lawyer-style conversation with professional tone',
+        'focus': 'Talk like a lawyer in everyday conversation',
+        'example': 'Professional but approachable legal discussion'
+    },
     'balance': {
         'name': 'Balanced Mix',
         'description': 'Cycle through all sample types for variety',
         'focus': 'Diverse training data with all sample type structures',
-        'example': 'Generates equal distribution of all 4 sample types'
+        'example': 'Generates equal distribution of all 16 sample types'
     }
 }
 
 # Sample type cycle order for balanced generation
-SAMPLE_TYPE_CYCLE = ['case_analysis', 'educational', 'client_interaction', 'statutory_interpretation']
+SAMPLE_TYPE_CYCLE = [
+    'case_analysis',
+    'educational',
+    'client_interaction',
+    'statutory_interpretation',
+    'legal_dialogue',
+    'pure_conceptual',
+    'comparative_analysis',
+    'ethical_reasoning',
+    'procedural_guide',
+    'legal_news_analysis',
+    'case_study',
+    'practical_application',
+    'simple_qa',
+    'general_reasoning',
+    'hypothetical',
+    'conversational'
+]
 
 # ============================================================================
 # JURISDICTION CONFIGURATION - GLOBAL LEGAL PLATFORM
